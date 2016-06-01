@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>setup.html</file>
+        <file>return.css</file>
+        <file>book.png</file>
+    </qresource>
+</RCC>
