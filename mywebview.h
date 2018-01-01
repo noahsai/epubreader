@@ -11,21 +11,21 @@ class mywebview : public QWebView
     Q_OBJECT
 public:
     explicit mywebview(QWidget *parent = 0);
-    void setbuttonvisible(bool);
-    bool buttonvisible();
 signals:
     void top();
     void buttom();
+    void wheelup(bool);
 public slots:
     void toshang();
     void toxia();
 
 private slots:
-    void setbutton();
 private:
-    void resizeEvent(QResizeEvent *);
     QPushButton *shang;
     QPushButton *xia;
+    void wheelEvent(QWheelEvent *);
+    int oldwheel;
+
 };
 
 #endif // MYWEBVIEW_H

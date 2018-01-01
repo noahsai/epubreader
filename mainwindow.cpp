@@ -41,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
     now=-1;//lock the button;
     connect(webview,SIGNAL(top()),this,SLOT(toshang()));
     connect(webview,SIGNAL(buttom()),this,SLOT(toxia()));
+    connect(webview , SIGNAL(wheelup(bool)) , ui->menuBar , SLOT(setVisible(bool)));
     connect(content,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(contentclick(QListWidgetItem*)));
 
     ui->act_qiangzhi->setEnabled(false);
@@ -179,10 +180,15 @@ void MainWindow::readfile(const QString& fileName)
         path=apppath;//the path of program
         dir.mkdir("/tmp/epub_tmp");
         rootpath="/tmp/epub_tmp/"+name;
-        QDir a(rootpath);
-        if( a.exists())//no need to unzip the file if the directory is existing;
+        QDir ().mkpath(rootpath);
+
+        QString tmp1;
+        QString unzip = "unar -D -f  ";//使用unar命令，需系统额外安装, 参数-D：不创建文件夹，-o: 输出位置
+        tmp1=unzip+ ' \"'+fileName+'\"'+" -o  "+'\"'+rootpath+'/\"';
+        qDebug()<<tmp1;
+        if(!system(tmp1.toStdString().c_str()))
         {
-            qDebug()<<"/tmp/epub_tmp/"<<name<<" exist";
+            qDebug()<<"unar epub  file ok";
             if(reading)
             {
                 makebookmark();
@@ -190,33 +196,14 @@ void MainWindow::readfile(const QString& fileName)
             }
             work();
             reading=true;
-        }
-        else if(QFile::exists("/tmp/epub_tmp/"+name+".zip")||QFile::copy(fileName,"/tmp/epub_tmp/"+name+".zip"))
-        {
-            //zip already exists or the file is copied sucessful
-            QString tmp1;
-            QString unzip = "unzip ";
-            tmp1=unzip+"-n "+'\"'+"/tmp/epub_tmp/"+name+".zip"+'\"'+" -d "+'\"'+"/tmp/epub_tmp/"+name+'\"';
-           // qDebug()<<tmp1;
-            if(!system(tmp1.toStdString().c_str()))
-            {
-                qDebug()<<"unzip file ok";
-                QFile::remove("/tmp/epub_tmp/"+name+".zip");
-                if(reading)
-                {
-                    makebookmark();
-                    bookmarks->save();
-                }
-                work();
-                reading=true;
-            }
-        }
+
+
         books->setVisible(false);
         webview->setVisible(true);
         ui->menuBar->setVisible(true);
         bookmarks->read(name);//在生成目录里加上了阻塞，保证load完才执行read读取最后阅读记录
         setMinimumSize(200,200);
-
+     }
     }
 
 }
@@ -229,7 +216,6 @@ int MainWindow::work()
     QString ncx=inpath+readopf(opf);
     qDebug()<<"ncx:"<<ncx;
     int result=readncx(ncx);
-    webview->setbuttonvisible(true);
     now=0;//reset;
     if(!result) return 0;
     return 1;
