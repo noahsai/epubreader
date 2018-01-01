@@ -7,7 +7,6 @@ int main(int argc, char *argv[])
     QDir dir(a.applicationDirPath());
     dir.mkpath(a.applicationDirPath()+"/bookmarks");
     MainWindow w;
-    w.setGeometry((QApplication::desktop()->width()-w.width())/2,(QApplication::desktop()->height()-w.height())/2,400,420);
     w.setWindowTitle( VERSION );
     w.setWindowIcon(QIcon(":/book.png"));
     w.setBackgroundRole(QPalette::Light);

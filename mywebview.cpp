@@ -7,12 +7,10 @@ mywebview::mywebview(QWidget *parent) :
     QVBoxLayout *vlayout  =  new QVBoxLayout(this);
     this->setLayout(vlayout);
     shang = new QPushButton("上一章",this);
-    shang->setFixedWidth(180);
     shang->setStyleSheet("QPushButton{background-color:#aa000000;color:white;}");
     shang->setCursor(QCursor(Qt::PointingHandCursor));
     connect(shang , SIGNAL(clicked(bool)) , this ,SLOT(toshang()));
     xia = new QPushButton("下一章" , this);
-    xia->setFixedWidth(180);
     xia->setStyleSheet("QPushButton{background-color:#aa000000;color:white;}");
     xia->setCursor(QCursor(Qt::PointingHandCursor));
     connect(xia  ,SIGNAL(clicked(bool)) ,this ,SLOT(toxia()));

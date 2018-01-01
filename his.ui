@@ -218,19 +218,22 @@ border:2px solid rgb(255, 121, 204);
             <bold>false</bold>
            </font>
           </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
           <property name="focusPolicy">
            <enum>Qt::NoFocus</enum>
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton{
-color:rgb(88, 220, 226);
-background-color: rgb(247, 252, 253);
+color:rgb(70, 202, 208);
+background-color: rgb(230, 240, 240);
 border:2px solid  rgb(247, 252, 253);
 }
 QPushButton:hover,QPushButton:checked
 {
-color:rgb(70, 202, 208);
-
+color:rgb(255, 255, 255);
+background-color: rgb(180, 180, 180);
 }</string>
           </property>
           <property name="text">

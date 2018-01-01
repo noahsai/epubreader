@@ -35,6 +35,7 @@ private slots:
     void toxia();
     void readset(QString set);
 
+
     void on_act_qiangzhi_triggered(bool checked);
 
     void on_action_4_triggered();
@@ -73,6 +74,8 @@ private:
     int readncx(QString filename);
     int work();
     void makecontent(QStringList title,QStringList site);
+    void savecfg();
+    void readcfg();
 
     QListWidget *content;
     QDockWidget *dock,*dock2;
@@ -93,7 +96,6 @@ private:
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
     void keyPressEvent(QKeyEvent *event);
-    QSize sizeHint() const;
 
     bool isfull;
     his* books;

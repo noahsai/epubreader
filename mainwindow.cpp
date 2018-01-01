@@ -71,14 +71,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(bookmarks,SIGNAL(tobookmark(QString&)),this,SLOT(getbookmark(QString&)));
 
     initset();//page set at this.
+    readcfg();
 }
-
-
-QSize MainWindow::sizeHint() const
-{
-    return QSize(600,420);
-}
-
 
 
 void MainWindow::full(bool fu)
@@ -113,6 +107,7 @@ void MainWindow::setting_sh()
 MainWindow::~MainWindow()
 {
     //system("rm -rf /tmp/epub_tmp");
+    savecfg();
     if(reading)
     {
         makebookmark();
@@ -626,4 +621,19 @@ void MainWindow::on_action_shuqian_triggered()
     {
         bookmarks->setVisible(!bookmarks->isVisible());
     }
+}
+
+void MainWindow::savecfg(){
+    QSettings settings("epubreader","cfg");
+    settings.setValue("size", size());
+    //qDebug()<<"savecfged";
+}
+
+void MainWindow::readcfg(){
+    QSettings settings("epubreader","cfg");
+    QSize s = settings.value("size", QSize(600, 600)).toSize();
+    int x=QApplication::desktop()->width()/2-s.width()/2;
+    int y=QApplication::desktop()->height()/2-s.height()/2;
+    setGeometry(x , y , s.width() , s.height() );
+   // qDebug()<<"readcfged";
 }
